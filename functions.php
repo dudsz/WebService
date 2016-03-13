@@ -46,19 +46,14 @@ class DB_Functions {
 		}
 	}
 
-	public function deleteUser($username) {
+	public function deleteUser($id1, $id2) {
 
-		$stmt = $this->conn->prepare("delete from login where 
-			username = ?");
-		$stmt->bind_param("s", $username);
-		$result = $stmt->execute();
-		$stmt->close();
-
-		// Check result 
-		if ($result) {
-			return true;
-		} else {
-			return false;
+		for ($i = $id1; $i < $id2; $i++) {
+			$stmt = $this->conn->prepare("delete from login where 
+			uID = ?");
+			$stmt->bind_param("i", $id1);		
+			$stmt->execute();		
+			$stmt->close();
 		}
 	}
 }
