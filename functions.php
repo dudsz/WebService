@@ -1,9 +1,9 @@
 <?php
 
-require_once 'config.php';
+//require_once 'config.php';
 require_once 'connect.php';
 
-class DB_Functions {
+class Testing {
 	private $conn;
 
 	function __construct() {
@@ -14,47 +14,62 @@ class DB_Functions {
 	}
 
 	public function regUser($username, $password, $email) {
-
-		$stmt = $this->conn->prepare("insert into login (username, password, email) values (?, ?, ?)");
-		$stmt->bind_param("sss", $username, $password, $email);
+		$stmt = $this->conn->prepare("insert into login 
+			(username, password, email) values (:un, :pw, :email)");
+		$stmt->bindParam(':un', $username);
+		$stmt->bindParam(':pw', $password);
+		$stmt->bindParam(':email', $email);
 
 		$result = $stmt->execute();
-		$stmt->close();
 
 		// Check reurn 
 		if ($result) {
-			return true;
+			$stmt = $this->conn->prepare("select * from login 
+				where username = :un");
+			$stmt->bindParam(':un', $username);
+			$stmt->execute();
+			// fetchAll() if multiple rows
+			$user = $stmt->fetch();
+			return $user;
 		} else {
 			return false;
 		}
 	}
-	
+
 	public function checkUser($username) {
 		$stmt = $this->conn->prepare("select username from 
-			login where username = ?");
-		$stmt->bind_param("s", $username);
+			login where username = :un");
+		$stmt->bindParam(':un', $username);
 		$stmt->execute();
-		$stmt->bind_result($user);
-		$stmt->close();
+		$result = $stmt->fetch();
 
-		if ($user) {
+		if ($result) {
 			// User exists
-			return true;
+			return $result;
 		} else {
 			// User does not exist
 			return false;
 		}
 	}
 
-	public function deleteUser($id1, $id2) {
-
-		for ($i = $id1; $i < $id2; $i++) {
+	// Update for PDO
+	public function deleteUser($startID) {
+		for ($i = $startID; $i < 20; $i++) {
 			$stmt = $this->conn->prepare("delete from login where 
-			uID = ?");
-			$stmt->bind_param("i", $id1);		
+			uID = :id");
+			$stmt->bindParam(':id', $i);		
 			$stmt->execute();		
 			$stmt->close();
 		}
+	}
+
+	// Update for PDO
+	public function alterAI($startID) {
+		$stmt = $this->conn->prepare("alter table login 
+			auto_increment = :id");
+		$stmt->bindParam(':id', $startID);		
+		$stmt->execute();
+		$stmt->close();
 	}
 }
 
