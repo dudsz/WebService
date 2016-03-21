@@ -1,17 +1,27 @@
 <?php
 
+
+
 class DB_Connect {
 	private $conn;
 
 	// Connecting to the database
 	public function connect() {
-		require_once ('config.php');
+		$DB_Host = "localhost";
+		$DB_Name = "test";
+		$DB_User = "";
+		$DB_Pw = "";
 		// Connecting to mysql database
-		$this->conn = new mysqli(DB_Host, DB_User, DB_Pw, DB_Name);
-		
-		if ($this->conn->connect_error) {
-			die("Connection failed: " . $conn->connect_error);
+		$dsn = "mysql:host=$DB_Host;dbname=$DB_Name";
+		$options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC);
+
+		try {
+			$this->conn = new PDO($dsn, $DB_User, $DB_Pw, $options);	
+		} catch (PDOException $e) {
+			echo "Error connecting, " . $e->getMessage();
 		}
+		
 		// Return database handler
 		return $this->conn;
 	}
