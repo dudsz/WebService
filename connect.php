@@ -11,7 +11,7 @@ class DB_Connect {
 		$DB_Name = "test";
 		$DB_User = "";
 		$DB_Pw = "";
-		// Connecting to mysql database
+		// Connecting to mysql database using PDO
 		$dsn = "mysql:host=$DB_Host;dbname=$DB_Name";
 		$options = array(PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
 			PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC);
