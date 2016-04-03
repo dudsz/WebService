@@ -53,14 +53,19 @@ class Testing {
 	}
 
 	// Update for PDO
-	public function deleteUser($startID) {
-		for ($i = $startID; $i < 20; $i++) {
+	public function delUser($username) {
 			$stmt = $this->conn->prepare("delete from login where 
-			uID = :id");
-			$stmt->bindParam(':id', $i);		
+			username = :un");
+			$stmt->bindParam(':un', $username);		
 			$stmt->execute();		
-			$stmt->close();
-		}
+			$result = $stmt->rowCount();
+			//$stmt->close();
+			if ($result > 0) {
+				return $result;
+			} else {
+				return false;
+			}
+
 	}
 
 	// Update for PDO

@@ -14,22 +14,34 @@ if (isset($_POST['un']) && !empty($_POST['un'])
 
 	if ($db->checkUser($username)) {
 		// User exists
-		echo "User already exists \n";
+		$jResponse["error"] = FALSE;
+		$jResponse["inserted"] = 0;
+		$jResponse["msg"] = "User already exists";
+		echo json_encode($jResponse);
 	} else {
 		// Reg user
 		$user = $db->regUser($username, $password, $email); 
 		if ($user) {
+			$jResponse["error"] = FALSE;
+			$jResponse["inserted"] = 1;
+			$jResponse["msg"] = "Successfully inserted user";
 			$jResponse["user"]["username"] = $user["username"];
 			$jResponse["user"]["email"] = $user["email"]; 
 			echo json_encode($jResponse);
 		} else {
 			// Failed to register
-			echo "Error occurred while registering \n";
+			$jResponse["error"] = FALSE;
+			$jResponse["inserted"] = 0;
+			$jResponse["msg"] = "User not inserted"; 
+			echo json_encode($jResponse);
 		}
 	} 
 } else {
 	// Bad post params, no values set
-	echo "Bad params \n";
+	$jResponse["error"] = TRUE;
+	$jResponse["inserted"] = 0;
+	$jResponse["msg"] = "Bad parameters"; 
+	echo json_encode($jResponse);
 }
 
 ?>
