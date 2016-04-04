@@ -11,19 +11,19 @@ if (isset($_POST['delete']) && !empty($_POST['delete'])
 
 	if (!$db->checkUser($username)) {
 		// User exists
-		$jResponse["deleted"] = 0;
+		$jResponse["success"] = 0;
 		$jResponse["msg"] = "User does not exist"; 
 		echo json_encode($jResponse);
 	} else {
 		// Reg user
 		$result = $db->delUser($username); 
 		if ($result) {
-			$jResponse["deleted"] = 1;
+			$jResponse["success"] = 1;
 			$jResponse["msg"] = "User deleted successfully"; 
 			echo json_encode($jResponse);
 		} else {
 			// Failed to register
-			$jResponse["deleted"] = 0;
+			$jResponse["success"] = 0;
 			$jResponse["msg"] = "User not deleted"; 
 			echo json_encode($jResponse);
 			//echo "Error occurred while registering \n";
@@ -32,7 +32,7 @@ if (isset($_POST['delete']) && !empty($_POST['delete'])
 } else {
 	// Bad post params, no values set
 	$jResponse["error"] = TRUE;
-	$jResponse["deleted"] = 0;
+	$jResponse["success"] = 0;
 	$jResponse["msg"] = "Bad params"; 
 	echo json_encode($jResponse);
 }

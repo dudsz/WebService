@@ -13,6 +13,23 @@ class Testing {
 	function __destruct() {
 	}
 
+	public function loginUser($username, $password) {
+		$stmt = $this->conn->prepare("select * from login 
+			where username = :un and password= :pw");
+		$stmt->bindParam(':un', $username);
+		$stmt->bindParam(':pw', $password);
+		$stmt->execute();
+		$result = $stmt->fetch();
+
+		if ($result) {
+			// User exists
+			return $result;
+		} else {
+			// User does not exist
+			return false;
+		}
+	}
+
 	public function regUser($username, $password, $email) {
 		$stmt = $this->conn->prepare("insert into login 
 			(username, password, email) values (:un, :pw, :email)");
