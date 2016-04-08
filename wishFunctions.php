@@ -12,23 +12,25 @@ class Testing {
 	function __destruct() {
 	}
 
-	public function addWish($un, $wl, $wN, $wD, $wP) {
+	public function addWish($un, $wl, $wn, $wd, $wpl) {
 		$stmt = $this->conn->prepare("insert into wishes 
 			(username, wishList, wishName, wishDesc, wishPlace) 
-			values (:un, :wl, :wName, :wDesc, :wPlace)");
+			values (:un, :wl, :wn, :wd, :wpl)");
 		$stmt->bindParam(':un', $un);
 		$stmt->bindParam(':wl', $wl);
-		$stmt->bindParam(':wName', $wN);
-		$stmt->bindParam(':wDesc', $wD);
-		$stmt->bindParam(':wPlace', $wP);
-
+		$stmt->bindParam(':wn', $wn);
+		$stmt->bindParam(':wd', $wd);
+		$stmt->bindParam(':wpl', $wpl);
 		$result = $stmt->execute();
 
-		// Check reurn 
+		// Check return 
 		if ($result) {
 			$stmt = $this->conn->prepare("select * from wishes 
-				where wishName = :wName");
-			$stmt->bindParam(':wName', $wN);
+				where username = :un and wishList = :wl
+				and wishName = :wn");
+			$stmt->bindParam(':un', $un);
+			$stmt->bindParam(':wl', $wl);
+			$stmt->bindParam(':wn', $wn);
 			$stmt->execute();
 			// fetchAll() if multiple rows
 			$wish = $stmt->fetch();
@@ -45,6 +47,23 @@ class Testing {
 		$stmt->bindParam(':wl', $wl);
 		$stmt->execute();
 		$result = $stmt->fetchAll();
+
+		if ($result) {
+			return $result;
+		} else {
+			return false;
+		}
+	}
+
+	public function getWish($username, $wl, $wn) {
+		$stmt = $this->conn->prepare("select wishName from 
+			wishes where username = :un and wishList = :wl
+			and wishName = :wn");
+		$stmt->bindParam(':un', $username);
+		$stmt->bindParam(':wl', $wl);
+		$stmt->bindParam(':wn', $wn);
+		$stmt->execute();
+		$result = $stmt->fetch();
 
 		if ($result) {
 			return $result;
