@@ -56,9 +56,9 @@ class Testing {
 	}
 
 	public function getWish($username, $wl, $wn) {
-		$stmt = $this->conn->prepare("select wishName from 
-			wishes where username = :un and wishList = :wl
-			and wishName = :wn");
+		$stmt = $this->conn->prepare("select wishName, wishDesc, 
+			wishPlace from wishes where username = :un 
+			and wishList = :wl and wishName = :wn");
 		$stmt->bindParam(':un', $username);
 		$stmt->bindParam(':wl', $wl);
 		$stmt->bindParam(':wn', $wn);
