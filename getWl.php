@@ -15,7 +15,11 @@ if (isset($_POST['un']) && !empty($_POST['un'])
 		$jResponse["error"] = FALSE;
 		$jResponse["success"] = 1;
 		$jResponse["username"] = $username;
+<<<<<<< HEAD
 		$jResponse["wishlist"] = $wishlist;
+=======
+		$jResponse["wishList"] = $wishList;
+>>>>>>> cb008efb9180b5c98727d67359edcc3252d6cf96
 		$jResponse["wishes"] = $wl;
 		echo json_encode($jResponse);
 	} else {
