@@ -14,6 +14,8 @@ if (isset($_POST['un']) && !empty($_POST['un'])
 	if ($wl) {		
 		$jResponse["error"] = FALSE;
 		$jResponse["success"] = 1;
+		$jResponse["username"] = $username;
+		$jResponse["wishlist"] = $wishlist;
 		$jResponse["wishes"] = $wl;
 		echo json_encode($jResponse);
 	} else {
