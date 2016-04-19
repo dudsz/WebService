@@ -40,6 +40,20 @@ class Testing {
 		}
 	}
 
+	public function getLists($username) {
+		$stmt = $this->conn->prepare("select distinct wishList 
+			from wishes where username = :un");
+		$stmt->bindParam(':un', $username);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+
+		if ($result) {
+			return $result;
+		} else {
+			return false;
+		}
+	}
+
 	public function getWishList($username, $wl) {
 		$stmt = $this->conn->prepare("select * from 
 			wishes where username = :un and wishList = :wl");
@@ -72,11 +86,12 @@ class Testing {
 		}
 	}
 
-	public function delWish($wn, $username) {
+	public function delWish($un, $wl, $wn) {
 		$stmt = $this->conn->prepare("delete from wishes where 
-		wishName = :wn and username = :un");
+		username = :un and wishList = :wl and wishName = :wn");
+		$stmt->bindParam(':un', $un);
+		$stmt->bindParam(':wl', $wl);
 		$stmt->bindParam(':wn', $wn);
-		$stmt->bindParam(':un', $username);		
 		$stmt->execute();		
 		$result = $stmt->rowCount();
 		//$stmt->close();

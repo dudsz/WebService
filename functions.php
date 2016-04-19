@@ -69,23 +69,20 @@ class Testing {
 		}
 	}
 
-	// Update for PDO
 	public function delUser($username) {
-			$stmt = $this->conn->prepare("delete from login where 
-			username = :un");
-			$stmt->bindParam(':un', $username);		
-			$stmt->execute();		
-			$result = $stmt->rowCount();
-			//$stmt->close();
-			if ($result > 0) {
-				return $result;
-			} else {
-				return false;
-			}
-
+		$stmt = $this->conn->prepare("delete from login where 
+		username = :un");
+		$stmt->bindParam(':un', $username);		
+		$stmt->execute();		
+		$result = $stmt->rowCount();
+		//$stmt->close();
+		if ($result > 0) {
+			return $result;
+		} else {
+			return false;
+		}
 	}
 
-	// Update for PDO
 	public function alterAI($startID) {
 		$stmt = $this->conn->prepare("alter table login 
 			auto_increment = :id");
