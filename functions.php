@@ -14,8 +14,8 @@ class Testing {
 	}
 
 	public function loginUser($username, $password) {
-		$stmt = $this->conn->prepare("select * from login 
-			where username = :un and password= :pw");
+		$stmt = $this->conn->prepare("select * from users 
+			where un = :un and pw= :pw");
 		$stmt->bindParam(':un', $username);
 		$stmt->bindParam(':pw', $password);
 		$stmt->execute();
@@ -54,8 +54,8 @@ class Testing {
 	}
 
 	public function checkUser($username) {
-		$stmt = $this->conn->prepare("select username from 
-			login where username = :un");
+		$stmt = $this->conn->prepare("select un from 
+			users where un = :un");
 		$stmt->bindParam(':un', $username);
 		$stmt->execute();
 		$result = $stmt->fetch();
