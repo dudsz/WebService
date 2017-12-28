@@ -14,13 +14,13 @@ class Testing {
 
 	public function addWish($un, $wl, $wn, $wd, $wpl) {
 		$stmt = $this->conn->prepare("insert into wishes 
-			(username, wishList, wishName, wishDesc, wishPlace) 
-			values (:un, :wl, :wn, :wd, :wpl)");
+			(wId, username, wishList, wishItemName, wishItemDesc, wishItemAvailableAt) 
+			values (:un, :wl, :win, :wid, :wiaa)");
 		$stmt->bindParam(':un', $un);
 		$stmt->bindParam(':wl', $wl);
-		$stmt->bindParam(':wn', $wn);
-		$stmt->bindParam(':wd', $wd);
-		$stmt->bindParam(':wpl', $wpl);
+		$stmt->bindParam(':win', $win);
+		$stmt->bindParam(':wid', $wid);
+		$stmt->bindParam(':wiaa', $wiaa);
 		$result = $stmt->execute();
 
 		// Check return 
@@ -30,7 +30,7 @@ class Testing {
 				and wishName = :wn");
 			$stmt->bindParam(':un', $un);
 			$stmt->bindParam(':wl', $wl);
-			$stmt->bindParam(':wn', $wn);
+			$stmt->bindParam(':win', $win);
 			$stmt->execute();
 			// fetchAll() if multiple rows
 			$wish = $stmt->fetch();
@@ -41,7 +41,7 @@ class Testing {
 	}
 
 	public function getLists($username) {
-		$stmt = $this->conn->prepare("select distinct wishList 
+		$stmt = $this->conn->prepare("select distinct wishListName 
 			from wishes where username = :un");
 		$stmt->bindParam(':un', $username);
 		$stmt->execute();
