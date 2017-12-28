@@ -4,8 +4,11 @@ create table users (uId INT PRIMARY KEY AUTO_INCREMENT,
 
 create table wishes (wId INT PRIMARY KEY AUTO_INCREMENT, 
                      username VARCHAR(50) NOT NULL, 
-                     wishList VARCHAR(30) NOT NULL, 
+                     wishListName VARCHAR(30) NOT NULL, 
                      wishItemName VARCHAR(30) NOT NULL, 
                      wishItemDesc VARCHAR(100), 
                      wishItemAvailableAt VARCHAR(30));
                      
+create table wishList (wLId INT PRIMARY KEY AUTO_INCREMENT,
+                       username VARCHAR(50) NOT NULL,
+                       wishListName VARCHAR(30) NOT NULL);
