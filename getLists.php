@@ -14,10 +14,11 @@ if (isset($_POST['un']) && !empty($_POST['un'])) {
 		$jResponse["msg"] = "Wish lists found";
 		$listNames = array();
 		foreach ($wLists as $wList) {
+			$list = array();
+			$list = $db->getWishList($username, $wList["wishListName"]);
+			$jResponse["wishLists"][] = $list;
 			$listNames[] = $wList["wishListName"];
 		}
-		$jResponse["wishLists"] = $listNames;
-		//$jResponse["wishLists"] = $wLists;
 		echo json_encode($jResponse);
 	} else {
 		// Failed to find a list for specifed user
@@ -28,7 +29,7 @@ if (isset($_POST['un']) && !empty($_POST['un'])) {
 } else {
 	// Bad post params, no values set
 	$jResponse["success"] = 0;
-	$jResponse["msg"] = "Bad parameters"; 
+	$jResponse["msg"] = "Bad parameters";
 	echo json_encode($jResponse);
 }
 
