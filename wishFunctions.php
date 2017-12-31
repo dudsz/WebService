@@ -41,7 +41,7 @@ class Testing {
 	}
 
 	public function getLists($username) {
-		$stmt = $this->conn->prepare("select distinct wishListName 
+		$stmt = $this->conn->prepare("select distinct  wishListName
 			from wishes where username = :un");
 		$stmt->bindParam(':un', $username);
 		$stmt->execute();
@@ -55,9 +55,9 @@ class Testing {
 	}
 
 	public function getWishList($username, $wl) {
-		$stmt = $this->conn->prepare("select wID, wishName, 
-			wishDesc, wishPlace from wishes where username = :un 
-			and wishList = :wl");
+		$stmt = $this->conn->prepare("select wId, wishListName, wishItemName,
+			wishItemDesc, wishItemAvailableAt from wishes where username = :un 
+			and wishListName = :wl");
 		$stmt->bindParam(':un', $username);
 		$stmt->bindParam(':wl', $wl);
 		$stmt->execute();
