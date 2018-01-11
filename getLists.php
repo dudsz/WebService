@@ -12,13 +12,15 @@ if (isset($_POST['un']) && !empty($_POST['un'])) {
 	if ($wLists) {
 		$jResponse["success"] = 1;
 		$jResponse["msg"] = "Wish lists found";
-		$listNames = array();
+		$list = array();
 		foreach ($wLists as $wList) {
-			$list = array();
-			$list = $db->getWishList($username, $wList["wishListName"]);
-			$jResponse["wishLists"][] = $list;
-			$listNames[] = $wList["wishListName"];
+			$il = array();
+			$itemList = $db->getWishList($username, $wList["wishListName"]);
+			$il["wishListName"] = $wList["wishListName"];
+			$il["wishList"] = $itemList;
+			$list[] = $il;
 		}
+		$jResponse["wishLists"] = $list;
 		echo json_encode($jResponse);
 	} else {
 		// Failed to find a list for specifed user
