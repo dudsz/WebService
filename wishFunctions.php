@@ -40,6 +40,25 @@ class Testing {
 		}
 	}
 
+	public function addWishList($un, $wln) {
+		$stmt = $this->conn->prepare("insert into wishLists (username, wishListName) values (:un, :wln)");
+		$stmt->bindParam(':un', $un);
+		$stmt->bindParam(':wln', $wln);
+		$result = $stmt->execute();
+
+		// Check return 
+		if ($result) {
+			$stmt = $this->conn->prepare("select * from wishLists where username = :un and wishListName = :wln");
+			$stmt->bindParam(':un', $un);
+			$stmt->bindParam(':wln', $wln);
+			$stmt->execute();
+			$wish = $stmt->fetch();
+			return $wish;
+		} else {
+			return false;
+		}
+	}
+
 	public function getLists($username) {
 		$stmt = $this->conn->prepare("select distinct  wishListName
 			from wishes where username = :un");
@@ -62,7 +81,8 @@ class Testing {
 		$stmt->bindParam(':wl', $wl);
 		$stmt->execute();
 		$result = $stmt->fetchAll();
-
+		
+		echo $result["wishItemName"];
 		if ($result) {
 			return $result;
 		} else {
@@ -87,6 +107,20 @@ class Testing {
 		}
 	}
 
+	public function checkWishListName($username, $wln) {
+		$stmt = $this->conn->prepare("select distinct wishListName from wishLists where username = :un and wishListName = :wln");
+		$stmt->bindParam(':un', $username);
+		$stmt->bindParam(':wln', $wln);
+		$stmt->execute();
+		$result = $stmt->fetchAll();
+
+		if ($result) {
+			return $result;
+		} else {
+			return false;
+		}
+	}
+
 	public function delWish($un, $wl, $wn) {
 		$stmt = $this->conn->prepare("delete from wishes where 
 		username = :un and wishList = :wl and wishName = :wn");
@@ -103,6 +137,4 @@ class Testing {
 		}
 	}
 }
-
-
 ?>
