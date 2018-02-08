@@ -1,3 +1,5 @@
+create database wishlists;
+
 create table users (uId INT PRIMARY KEY AUTO_INCREMENT,
                     un VARCHAR(50) UNIQUE NOT NULL,
                     pw VARCHAR(50) NOT NULL);
