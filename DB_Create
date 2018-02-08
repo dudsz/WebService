@@ -2,7 +2,8 @@ create database wishlists;
 
 create table users (uId INT PRIMARY KEY AUTO_INCREMENT,
                     un VARCHAR(50) UNIQUE NOT NULL,
-                    pw VARCHAR(50) NOT NULL);
+                    pw VARCHAR(50) NOT NULL
+                    email VARCHAR(50) UNIQUE NOT NULL);
 
 // Ta bort wishListName och använd foreign key?
 create table wishes (wId INT PRIMARY KEY AUTO_INCREMENT, 
